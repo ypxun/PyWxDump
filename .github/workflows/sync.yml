@@ -25,17 +25,18 @@ jobs:
 
       - name: Fetch Upstream
         run: git fetch upstream
-
+      
       - name: Sync with Upstream Master
         run: |
           git checkout master
-          git merge upstream/master
+          git merge --allow-unrelated-histories upstream/master
           git push origin master
+
 
       - name: Sync with Upstream Other Branches
         run: |
           for branch in $(git branch -r | grep upstream/ | grep -v '\->' | sed 's|upstream/||'); do
             git checkout $branch
-            git merge upstream/$branch
+            git merge --allow-unrelated-histories upstream/$branch
             git push origin $branch
           done
